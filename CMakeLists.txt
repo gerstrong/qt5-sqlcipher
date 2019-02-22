@@ -5,6 +5,12 @@ find_package(Qt5Sql REQUIRED)
 find_package(PkgConfig REQUIRED)
 pkg_check_modules(SQLCIPHER REQUIRED sqlcipher)
 
+set(CMAKE_CXX_STANDARD 14)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
+find_package(Qt5 REQUIRED COMPONENTS
+                 Core Gui Widgets Network Sql Xml)
+
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 set(CMAKE_AUTOMOC ON)
 
@@ -12,7 +18,6 @@ set(CMAKE_AUTOMOC ON)
 # relative to the test binary.
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/sqldrivers)
-
 option(STATIC "Build plugin as a static library" OFF)
 if(STATIC)
     set(LIBTYPE STATIC)
@@ -32,6 +37,8 @@ target_include_directories(qsqlcipher PRIVATE
     ${Qt5Sql_PRIVATE_INCLUDE_DIRS}
     ${SQLCIPHER_INCLUDE_DIRS}
 )
+
+message(STATUS "Qt5Sql_PRIVATE_INCLUDE_DIRS = ${Qt5Sql_PRIVATE_INCLUDE_DIRS}")
 
 target_link_libraries(qsqlcipher
     Qt5::Sql
